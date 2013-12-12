@@ -7,7 +7,6 @@ class SearchResult
   frequency = nil
 end
 
-
 def Hash_Func( str )
   hash = 0
   i = 0
@@ -20,56 +19,62 @@ def Hash_Func( str )
 end
 
 class PeerSearchInterface
-  s = nil
-  id = "NILID"
-  ip = "NILIP"
-  guid = "NILGUID"
-  bootstrap_ip = "NILIP"
-  routing_table = {}
 
-  def self.init( udp_socket, idIn, ipIn, b_ip )
+  def initialize
+    @s = nil
+    @id = "NILID"
+    @port = nil
+    @ip = "NILIP"
+    @guid = "NILGUID"
+    @bootstrap_ip = "NILIP"
+    @routing_table = {}
+    @nid = 0
+  end
+
+  def init( udp_socket )
     @s = udp_socket
-    @bootstrap_ip = b_ip
-    @id = idIn
-    @ip = ipIn
-    @guid = Hash_Func( @id )
-    #@guid = @id
     self.listenLoop()
   end
 
-  def self.joinNetwork( bootstrap_node=PeerSearchInterface::bootstrap_ip )
-    if @bootstrap_ip == "NILIP"
-      puts "First Node in Network!  Waiting for peers ..."
-      return 0
+  def joinNetwork( ip_in, port_in, id_in, target_id )
+    @nid += 1
+    @id = id_in
+    @ip = ip_in
+    @guid = Hash_Func( @id )
+    @port = port_in
+    if target_id == nil
+      puts @id, "First Node in Network!  Waiting for peers ..."
+      return @nid
     else
-      joinMesg = { :type => "JOINING_NETWORK", :ip_address => bootstrap_node, :node_id => @guid }.to_json
-      puts joinMesg
-      @s.send joinMesg, 0, "127.0.0.1", 8777
-      return 8777
+      joinMesg = { :type => "JOINING_NETWORK_SIMPLIFIED", :node_id => @guid, :target_id => Hash_Func( target_id ), \
+                   :ip_address => @ip }.to_json
+      puts @id, joinMesg
+      @s.send joinMesg, 0, @ip, @port
+      return @nid
     end
   end
 
-  def self.leaveNetwork( network_id )
+  def leaveNetwork( network_id )
     if routing_table.empty
       puts "You may not leave the network as you are the sole bootstrap node"
     else
       leaveMesg = { :type => "LEAVING_NETWORK", :node_id => @guid }.to_json
       puts leaveMesg
-      @s.send leaveMesg, 0, "127.0.0.1", 8777
+      @s.send leaveMesg, 0, @ip, @port
     end
 
   end
 
-  def self.indexPage( url, unique_words )
+  def indexPage( url, unique_words )
     for i in unique_words.length
       wordHash = Hash( unique_words[i] )
-      indexMesg = { :type => "INDEX", :node_id => hash, :sender_id => guid , :keyword => unique_words[i],
+      indexMesg = { :type => "INDEX", :node_id => @hash, :sender_id => @guid , :keyword => @unique_words[i],
                     :link => url }.to_json
       #s.puts indexMesg
     end
   end
 
-  def self.search( words )
+  def search( words )
     for i in words.length
       wordHash = Hash( words[i] )
       searchMesg = { :type => "SEARCH", :word => words[i], :node_id => wordHash, :sender_id => guid }.to_json
@@ -77,7 +82,7 @@ class PeerSearchInterface
     end
     end
 
-  def self.listenLoop()
+  def listenLoop()
     x = Thread.new{
       puts "I am a thread"
       i = 0
@@ -85,41 +90,51 @@ class PeerSearchInterface
         i = i + 1
         puts "Loop", i
         jsonIN = p @s.recv(65536)
-        #puts jsonIN
+        puts jsonIN
         parsed = JSON.parse(jsonIN)
         self.respond( parsed )
       end
     }
   end
 
-  def self.respond( message )
-    if message.type == "JOINING_NETWORK"
-      routing_table[node_id] = message.ip_address
+  def respond( message )
+    if message["type"] == "JOINING_NETWORK_SIMPLIFIED"
+      @routing_table[:message["node_id"]] = message["ip_address"]
     end
-    if message.type == "JOINING_NETWORK" or message.type == "JOINING_NETWORK"
-      if self.closest( message.node_id ) == guid
-        routingInfoMesg = { :type => "ROUTING_INFO", :gateway_id => @guid, :node_id => message.node_ID, :ip_address => @ip, \
-          :route_table => routing_table }.to_json
+    if message["type"] == "JOINING_NETWORK_SIMPLIFIED" || message.type == "JOINING_NETWORK_RELAY_SIMPLIFIED"
+      if self.closest( message["node_id"] ) == @guid
+        puts "LLLLLL"
+        routingInfoMesg = { :type => "ROUTING_INFO", :gateway_id => @guid, :node_id => message["node_id"], \
+         :ip_address => @ip, :route_table => routing_table }.to_json
         puts routingInfoMesg
-        @s.send routingInfoMesg, 0, "127.0.0.1", 8777
+        @s.send routingInfoMesg, 0, @ip, @port
       else
-        joinMesgRelay = { :type => "JOINING_NETWORK_RELAY", :node_id => @message.node_id, :gateway_id => guid }.to_json
+        puts "MMMMMM"
+        joinMesgRelay = { :type => "JOINING_NETWORK_RELAY_SIMPLIFIED", :node_id => message["node_id"], \
+        :target_id => message["target_id"], :gateway_id => @guid }.to_json
         puts joinMesgRelay
-        @s.send joinMesgRelay, 0, "127.0.0.1", 8777
+        @s.send joinMesgRelay, 0, @ip, @port
       end
     end
   end
 
-  def self.closest( node_id )
-    close = guid
-    dist = abs( node_id - guid )
-    #@routing_table.each_key{
-    #  if abs( node_id - key ) < dist
-    #    dist = abs( node_id - key )
-    #    close = key
-    #  end
-    #}
-    return key
+  def closest( node_id )
+    close = @guid
+    dist = node_id - @guid
+    dist = dist.abs
+    puts ":", @routing_table
+    @routing_table.each_key{ |key|
+      puts key, "loo"
+      lll = node_id - key
+      puts "boo"
+      if lll.abs < dist
+        puts "doo"
+        dist = ( node_id - key ).abs
+        close = key
+      end
+    }
+    puts "mango"
+    return guid
   end
 
 end
