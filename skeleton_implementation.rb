@@ -4,6 +4,7 @@ require_relative 'search_result'
 
 ip = "127.0.0.1"
 id = "NILID"
+#InetAddr = Struct.new(:ip, :port)
 
 =begin
 port = 8767
@@ -24,22 +25,22 @@ ARGV.clear
 alpha = PeerSearchInterface.new
 sA = UDPSocket.new
 sA.bind(ip, 8777)
-alpha.init( sA )
-nid = alpha.joinNetwork( "127.0.0.1", 8777, "Alpha", nil)
+alpha.init( sA, InetAddr.new("127.0.0.1", "8777") )
+nid = alpha.joinNetwork( InetAddr.new(nil, nil), "Alpha", nil)
 puts "Alpha joining", nid
 
 beta = PeerSearchInterface.new
 sB = UDPSocket.new
 sB.bind(ip, 8778)
 beta.init( sB )
-nid = beta.joinNetwork( "127.0.0.1", 8778, "Beta", "Alpha")
+nid = beta.joinNetwork( InetAddr.new("127.0.0.1", "8778"), "Beta", "Alpha")
 puts "Beta joining", nid
 
 charlie = PeerSearchInterface.new
 sC = UDPSocket.new
 sC.bind(ip, 8779)
 charlie.init( sC )
-nid = charlie.joinNetwork( "127.0.0.1", 8779, "Charlie", "Alpha")
+nid = charlie.joinNetwork( InetAddr.new("127.0.0.1", "8779"), "Charlie", "Alpha")
 puts "Charlie joining", nid
 
 puts 'Type "LEAVE" to leave '
