@@ -4,9 +4,10 @@
     <list default="true" id="a1f63905-b5c5-47d5-b758-54049c35e5b7" name="Default" comment="" />
     <ignored path="Project.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/search_result.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387404693403" ignored="false" />
-    <file path="/skeleton_implementation.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387404534612" ignored="false" />
+    <file path="/search_result.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387623717891" ignored="false" />
+    <file path="/skeleton_implementation.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387552672514" ignored="false" />
     <file path="/Ruby Console" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1386333420562" ignored="false" />
+    <file path="/PeerSearchInterface" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387628799077" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,10 +29,10 @@
     <splitter split-orientation="horizontal" split-proportion="0.49573106">
       <split-first>
         <leaf>
-          <file leaf-file-name="search_result.rb" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="search_result.rb" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/search_result.rb">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="108" column="7" selection-start="2658" selection-end="2658" vertical-scroll-proportion="-0.44302326">
+                <state line="153" column="13" selection-start="4320" selection-end="4320" vertical-scroll-proportion="0.33292684">
                   <folding />
                 </state>
               </provider>
@@ -41,10 +42,19 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="skeleton_implementation.rb" pinned="false" current="false" current-in-tab="true">
+          <file leaf-file-name="skeleton_implementation.rb" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/skeleton_implementation.rb">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="29" column="54" selection-start="628" selection-end="628" vertical-scroll-proportion="0.5558061">
+                <state line="1" column="16" selection-start="31" selection-end="31" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="PeerSearchInterface" pinned="false" current="true" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/PeerSearchInterface">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="325" column="107" selection-start="9681" selection-end="9681" vertical-scroll-proportion="0.71167046">
                   <folding />
                 </state>
               </provider>
@@ -64,6 +74,7 @@
       <list>
         <option value="$PROJECT_DIR$/skeleton_implementation.rb" />
         <option value="$PROJECT_DIR$/search_result.rb" />
+        <option value="$PROJECT_DIR$/PeerSearchInterface" />
       </list>
     </option>
   </component>
@@ -87,7 +98,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1" splitterProportion="0.5">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -98,12 +109,38 @@
       <autoscrollFromSource />
       <sortByType />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CS4032_Ian_Beatty-Orr_Project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="options.lastSelected" value="appearance" />
     <property name="recentsLimit" value="5" />
     <property name="FullScreen" value="false" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -292,13 +329,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1064" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.67087275" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19432548" sideWeight="0.5022971" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19423692" sideWeight="0.5022971" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5026288" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32912722" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -376,13 +413,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/search_result.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="115" selection-start="278" selection-end="278" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/skeleton_implementation.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -476,14 +506,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/skeleton_implementation.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="54" selection-start="628" selection-end="628" vertical-scroll-proportion="0.5558061">
+        <state line="1" column="16" selection-start="31" selection-end="31" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/search_result.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="7" selection-start="2658" selection-end="2658" vertical-scroll-proportion="-0.44302326">
+        <state line="153" column="13" selection-start="4320" selection-end="4320" vertical-scroll-proportion="0.33292684">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PeerSearchInterface">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="325" column="107" selection-start="9681" selection-end="9681" vertical-scroll-proportion="0.71167046">
           <folding />
         </state>
       </provider>

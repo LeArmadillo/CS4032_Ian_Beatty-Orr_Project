@@ -22,26 +22,42 @@ end
 ARGV.clear
 =end
 
-alpha = PeerSearchInterface.new
+alpha = PeerSearchInterface.new("ALPHA")
 sA = UDPSocket.new
 sA.bind(ip, 8777)
-alpha.init( sA, InetAddr.new("127.0.0.1", "8777") )
-nid = alpha.joinNetwork( InetAddr.new(nil, nil), "Alpha", nil)
-puts "Alpha joining", nid
+alpha.init( sA, InetAddr.new( "127.0.0.1", "8777" ) )
+nid = alpha.joinNetwork( InetAddr.new( nil, nil ), "Alpha", nil )
+#puts "Alpha joining", nid
 
-beta = PeerSearchInterface.new
+beta = PeerSearchInterface.new("BETA")
 sB = UDPSocket.new
 sB.bind(ip, 8778)
-beta.init( sB )
-nid = beta.joinNetwork( InetAddr.new("127.0.0.1", "8778"), "Beta", "Alpha")
-puts "Beta joining", nid
+beta.init( sB, InetAddr.new( "127.0.0.1", "8778" ) )
+nid = beta.joinNetwork( InetAddr.new("127.0.0.1", "8777"), "Beta", "Alpha" )
+#puts "Beta joining", nid
 
-charlie = PeerSearchInterface.new
+
+sleep 2
+puts "**************************"
+puts "**************************"
+puts "**************************"
+
+
+charlie = PeerSearchInterface.new("CHARLIE")
 sC = UDPSocket.new
 sC.bind(ip, 8779)
-charlie.init( sC )
-nid = charlie.joinNetwork( InetAddr.new("127.0.0.1", "8779"), "Charlie", "Alpha")
-puts "Charlie joining", nid
+charlie.init( sC, InetAddr.new( "127.0.0.1", "8779" ) )
+nid = charlie.joinNetwork( InetAddr.new( "127.0.0.1", "8778" ), "Charlie", "Alpha" )
+#puts "Charlie joining", nid
+
+#puts "Having a snooze ... zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+#sleep 5
+
+
+#alpha.indexPage( "www.1.url", ["Alpha", "Beta", "Charlie"] )
+#alpha.indexPage( "www.1.url", ["Alpha", "Beta", "Charlie"] )
+#alpha.indexPage( "www.1.url", ["Alpha", "Beta", "Charlie"] )
+
 
 puts 'Type "LEAVE" to leave '
 input = ""

@@ -27,6 +27,7 @@ class PeerSearchInterface
     @b = 4
     @lc = 32
     @lb = 128
+    @linkHash = {}
   end
 
   def init( udp_socket, inetAddr_in )
@@ -58,6 +59,108 @@ class PeerSearchInterface
     return PaddGUID( hash )
   end
 
+  def nextHop( target_id )
+    m = 0
+    n = -1
+    #puts @guid, target_id
+    while @guid[m] == target_id[m] && m < @m_max
+      #puts m
+      m += 1
+    end
+    n = target_id[m].to_i
+    print name, "nextHop"
+    #puts @routing_table
+    return InetAddr.new( @routing_table[[0,m,n]]["ip_address"], @routing_table[[0,m,n]]["port"] ), m, n
+  end
+
+  def getMnN( target_id )
+    m = 0
+    n = -1
+    #puts @guid, target_id
+    while @guid[m] == target_id[m] && m < @m_max
+      #puts m
+      m += 1
+    end
+    n = target_id[m].to_i
+    return m, n
+  end
+
+  def diff( node_guid )
+    #puts @guid, node_guid
+    iGuid = @guid.to_i
+    iNodeGuid = node_guid.to_i
+    t = iGuid - iNodeGuid
+    return t.abs
+  end
+
+  def halfDiff( node_id )
+    half_id = node_id
+    m = 0
+    while @guid[m] == node_id[m] && m < @m_max
+      m += 1
+    end
+    m > 30
+      return -1
+    end
+    if node_id[m] > @guid[m]
+      half_id[m] = (node_id[m].to_i + 1).to_s
+    elsif node_id[m] < @guid[m]
+      half_id[m] = (node_id[m].to_i - 1).to_s
+    else
+      puts "halfDiff Error"
+    end
+    m += 1
+    half_id[m] = "8"
+    m +=m 1
+    while m < @m_max
+      half_id[m] = 0
+      m += 1
+    end
+    t = half_id.to_i - node_id.to_i
+    return t.abs
+  end
+
+  def strToSym( str )
+    sym = str.gsub('[', '')
+    sym = sym.gsub(']', '')
+    c = sym.split(', ')
+    c0 = c[0].to_i
+    c1 = c[1].to_i
+    c2 = c[2].to_i
+    return [c0,c1,c2]
+  end
+
+  def useRouteInfo( routeTable )
+    for addr in routeTable
+      addr = strToSym( addr )
+      if @routing_table.has_key?(addr)
+        if halfDiff( routeTable[addr]["node_id"] ) < halfDiff( @routing_table[addr]["node_id"] )
+          @routing_table[addr] = routeTable[addr]
+        end
+      else
+        @routing_table[addr] = routeTable[addr]
+      end
+    end
+  end
+
+  def removeAddr( node_id )
+    for addr in @routing_table.keys
+      if @routing_table[addr]["node_id"] == node_id
+        @routing_table.delete([addr])
+      end
+    end
+  end
+
+  # Send message to all nodes in routing table of node except messages with the node ID contain in <from>
+  # <from> may be nil for a true broadcast
+  def sendBroadCast( from, mesg )
+    for addr in @routing_table.keys
+      if @routing_table[addr]["node_id"] != from
+        @s.send mesg, 0, @routing_table[addr]["ip_address"], @routing_table[addr]["port"]
+      end
+    end
+  end
+
   def joinNetwork( gateInetAddr_in, id_in, target_id )
     @id = id_in
     @gateInetAddr = gateInetAddr_in
@@ -87,14 +190,13 @@ class PeerSearchInterface
       puts "You may not leave the network as you are the sole bootstrap node"
     else
       leaveMesg = { :type => "LEAVING_NETWORK", :node_id => @guid }.to_json
-      #puts leaveMesg
-      @s.send leaveMesg, 0, @localInetAddr.ip, @localInetAddr.port
+      sendBroadCast( nil, leaveMesg )
     end
 
   end
 
   def indexPage( url, unique_words )
-    puts unique_words, unique_words.length
+    #puts unique_words, unique_words.length
     for i in 0..unique_words.length
       wordHash = Hash_Func( unique_words[i] )
       puts unique_words[i]
@@ -105,11 +207,12 @@ class PeerSearchInterface
     end
   end
 
-  def search( words )
-    for i in words.length
-      wordHash = Hash( words[i] )
+  def search( unique_words )
+    for i in unique_words.length
+      wordHash = Hash( unique_words[i] )
       searchMesg = { :type => "SEARCH", :word => words[i], :node_id => wordHash, :sender_id => guid }.to_json
-      #s.puts searchMesg
+      nh = nextHop( wordHash )
+      s.puts indexMesg, 0, nh.ip, nh.port
     end
   end
 
@@ -193,108 +296,52 @@ class PeerSearchInterface
     end
 
     if message["type"] == "ROUTING_INFO"
-      gateway_guid = message["gateway_id"]
-      if message["node_id"] == @guid
-        puts "RIM is at the JN"
-        art = message["route_table"]
-        puts art.length
-        for addr in art.keys
-
-          addr2 = addr.gsub('[', '')
-          addr2 = addr2.gsub(']', '')
-          c = addr2.split(', ')
-          c0 = c[0].to_i
-          c1 = c[1].to_i
-          c2 = c[2].to_i
-          addr = [c0,c1,c2]
-          if !@routing_table.has_key?(addr) || diff( joining_guid ) < diff( @routing_table[addr]["node_id"] )
-            puts "h6"
-            @routing_table[addr] = { :node_id => message["node_id"], :ip_address => message["ip_address"], \
-             :port => message["port"] }
-            puts "h7"
-          end
-          #Hash[@routing_table.map{ |k, v| [k.to_sym, v] }]
+      #addAddr( message["sending_id"], message["node_id"], message["node_id"] )
+      useRouteInfo( message["route_table"] )
+      if message["gateway_id"] == @guid
+        if @gateway_table.has_key?( message["node_id"] )
+          @s.send message, 0, @gateway_table[message["node_id"]].ip, @gateway_table[message["node_id"]].port
+        else
+          puts "Routing_Info message receave error not key in gatewayTable!"
         end
-        #puts @routing_table
+      else
+        nh, gm, gn = nextHop( message["gateway_id"] )
+        @s.send message, 0, nh.ip, nh.port
+      end
+    end
+
+    if message["type"] == "LEAVING_NETWORK"
+      removeAddr( message["node_id"])
+    end
+
+    if message["type"] == "INDEX"
+      if message["target_id"] == @guid
+        for url in message["link"]
+          if @linkHash.has_key?(url)
+            @linkHash[url] += 1
+          else
+            @linkHash[url] = 0
+          end
+        end
+      ackIndexMesg = { :type => "ACK_INDEX", :node_id => message["sender_id"], :keyword => message["keyword"] }
+
 
       else
-        nh, gm, gn = nextHop( gateway_guid )
+        nh, tm, tn = nextHop( message["target_id"] )
+        @s.send message, 0, nh.ip, nh.port
       end
     end
 
 
 
-=begin
-    if message["type"] == "JOINING_NETWORK_RELAY_SIMPLIFIED"
-        target_guid = message["target_id"]
-        local_guid = @guid
-        m = 0
-        n = -1
-        puts local_guid, target_guid
-        while local_guid[m] == target_guid[m]
-          #puts m
-          m += 1
-        end
-        if m < 32
-          n = target_guid[m]
-          joinMesgRelay = { :type => "JOINING_NETWORK_RELAY_SIMPLIFIED", :node_id => message["node_id"], \
-         :target_id => message["target_id"], :gateway_id => message["gateway_id"] }.to_json
-          @s.send joinMesgRelay, 0, @routing_table[0][m][n]["ip_address"], @routing_table[0][m][n]["port"]
 
-          if( diff(joining_guid) < diff( padd_GUID( @routing_table[0][m][n]["node_id"] ) ) )
-            routing_table[0][m][n] =  { :node_id => message["node_id"], :ip_address => message["ip_address"], \
-           :ip_address => message["port"] }
-          end
-        elsif m == 32
-          routingInfoMesg = { :type => "ROUTING_INFO", :gateway_id => message["gateway_id"], :node_id => message["node_id"], \
-           :ip_address => @localInetAddr.ip, :route_table => routing_table }.to_json
-          nh = nextHop( message["gateway_id"] )
-          @s.send routingInfoMesg, 0, nh.ip, nh.port
-        else
-          puts "M is begger than 32 ERROR!"
-        end
-      end
-=end
 
   end
 
 
 
 
-  def nextHop( target_id )
-    m = 0
-    n = -1
-    #puts @guid, target_id
-    while @guid[m] == target_id[m] && m < @m_max
-      #puts m
-      m += 1
-    end
-    n = target_id[m].to_i
-    print name, "nextHop"
-    #puts @routing_table
-    return InetAddr.new( @routing_table[[0,m,n]]["ip_address"], @routing_table[[0,m,n]]["port"] ), m, n
-  end
 
-  def getMnN( target_id )
-    m = 0
-    n = -1
-    #puts @guid, target_id
-    while @guid[m] == target_id[m] && m < @m_max
-      #puts m
-      m += 1
-    end
-    n = target_id[m].to_i
-    return m, n
-  end
-
-
-  def diff( node_guid )
-    #puts @guid, node_guid
-    iGuid = @guid.to_i
-    iNodeGuid = node_guid.to_i
-    t = iGuid - iNodeGuid
-    return t.abs
-  end
 
 =begin
   def diff( node_id )
