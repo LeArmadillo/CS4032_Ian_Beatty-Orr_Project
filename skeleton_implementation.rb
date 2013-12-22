@@ -1,33 +1,37 @@
 require 'json'
 require 'socket'
-require_relative 'search_result'
+#require_relative 'search_result'
+require_relative 'peerSearchInterface'
 
 ip = "127.0.0.1"
 id = "NILID"
-#InetAddr = Struct.new(:ip, :port)
-
-=begin
-port = 8767
-if ARGV[0] == "--port"
-  port = ARGV[1]
-end
-if ARGV[2] == "--bootstrap" && ARGV[4] == "--id"
-  bootstrap_ip = ARGV[3]
-  id = ARGV[5]
-elsif ARGV[2] == "--boot"
-  id = ARGV[3]
-else
-  puts 'NO COMMAND LINE ARGUMENTS - THIS WILL NEVER JOIN A NETWORK'
-end
-ARGV.clear
-=end
 
 alpha = PeerSearchInterface.new("ALPHA")
+=begin
+puts alpha.Hash_Func( "Alpha" )
+puts alpha.Hash_Func( "Bravo" )
+puts alpha.Hash_Func( "Charlie" )
+puts alpha.Hash_Func( "Delta" )
+puts alpha.Hash_Func( "Echo" )
+puts alpha.Hash_Func( "Foxtrot" )
+puts alpha.Hash_Func( "Golf" )
+puts alpha.Hash_Func( "Hotel" )
+puts alpha.Hash_Func( "India" )
+puts alpha.Hash_Func( "Juliett" )
+puts alpha.Hash_Func( "Kilo" )
+puts alpha.Hash_Func( "Lime" )
+puts alpha.Hash_Func( "Mike" )
+puts alpha.Hash_Func( "November" )
+puts alpha.Hash_Func( "Oscar" )
+puts alpha.Hash_Func( "Papa" )
+=end
 sA = UDPSocket.new
 sA.bind(ip, 8777)
 alpha.init( sA, InetAddr.new( "127.0.0.1", "8777" ) )
 nid = alpha.joinNetwork( InetAddr.new( nil, nil ), "Alpha", nil )
 #puts "Alpha joining", nid
+
+sleep 1
 
 beta = PeerSearchInterface.new("BETA")
 sB = UDPSocket.new
@@ -37,7 +41,7 @@ nid = beta.joinNetwork( InetAddr.new("127.0.0.1", "8777"), "Beta", "Alpha" )
 #puts "Beta joining", nid
 
 
-sleep 2
+sleep 1
 puts "**************************"
 puts "**************************"
 puts "**************************"
@@ -50,13 +54,34 @@ charlie.init( sC, InetAddr.new( "127.0.0.1", "8779" ) )
 nid = charlie.joinNetwork( InetAddr.new( "127.0.0.1", "8778" ), "Charlie", "Alpha" )
 #puts "Charlie joining", nid
 
-#puts "Having a snooze ... zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
-#sleep 5
 
 
-#alpha.indexPage( "www.1.url", ["Alpha", "Beta", "Charlie"] )
-#alpha.indexPage( "www.1.url", ["Alpha", "Beta", "Charlie"] )
-#alpha.indexPage( "www.1.url", ["Alpha", "Beta", "Charlie"] )
+sleep 1
+
+delta = PeerSearchInterface.new("DELTA")
+sD = UDPSocket.new
+sD.bind(ip, 8780)
+delta.init( sD, InetAddr.new( "127.0.0.1", "8780" ) )
+nid = delta.joinNetwork( InetAddr.new( "127.0.0.1", "8778" ), "Delta", "Charlie" )
+#puts "Charlie joining", nid
+
+sleep 1
+
+#alpha.indexPage( "www.1.url", ["Alpha"] )
+#alpha.indexPage( "www.2.url", ["Beta"] )
+
+#sleep 3
+puts "~~~~~~~~~~~~~~~~~"
+puts "~~~~~~~~~~~~~~~~~"
+puts "~~~~~~~~~~~~~~~~~"
+charlie.indexPage( "www.5.url", ["Alpha", "Beta"] )
+
+sleep 14
+puts "###########################"
+puts "###########################"
+puts "###########################"
+puts "###########################"
+charlie.search( ["Alpha"] )
 
 
 puts 'Type "LEAVE" to leave '
@@ -64,4 +89,4 @@ input = ""
 while input != 'LEAVE'
   input = gets.chomp()
 end
-g6ps.leaveNetwork( nid )
+
