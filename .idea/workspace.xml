@@ -5,10 +5,11 @@
     <ignored path="Project.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/search_result.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387623717891" ignored="false" />
-    <file path="/skeleton_implementation.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387746485976" ignored="false" />
+    <file path="/skeleton_implementation.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387812761161" ignored="false" />
     <file path="/Ruby Console" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1386333420562" ignored="false" />
     <file path="/PeerSearchInterface" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387646699792" ignored="false" />
-    <file path="/peerSearchInterface.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387751820104" ignored="false" />
+    <file path="/peerSearchInterface.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387801475907" ignored="false" />
+    <file path="/peerSearchInterfaceCommented.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387811964198" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,39 +23,57 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="peerSearchInterface.rb" pinned="false" current="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/peerSearchInterface.rb">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state line="480" column="97" selection-start="12742" selection-end="12742" vertical-scroll-proportion="-151.11111">
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="peerSearchInterfaceCommented.rb" pinned="false" current="true" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/peerSearchInterfaceCommented.rb">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state line="370" column="21" selection-start="15206" selection-end="15206" vertical-scroll-proportion="-4.117249">
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+    <window id="2">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="skeleton_implementation.rb" pinned="false" current="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/skeleton_implementation.rb">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state line="103" column="14" selection-start="2831" selection-end="2831" vertical-scroll-proportion="0.5010482">
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="Project" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf>
-          <file leaf-file-name="peerSearchInterface.rb" pinned="false" current="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/peerSearchInterface.rb">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="696" column="41" selection-start="20958" selection-end="20958" vertical-scroll-proportion="0.7863248">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="skeleton_implementation.rb" pinned="false" current="true" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/skeleton_implementation.rb">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="64" column="30" selection-start="1671" selection-end="1671" vertical-scroll-proportion="-0.6910299">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -67,16 +86,16 @@
         <option value="$PROJECT_DIR$/search_result.rb" />
         <option value="$PROJECT_DIR$/PeerSearchInterface" />
         <option value="C:/Ruby193/lib/ruby/1.9.1/tk/clock.rb" />
-        <option value="$PROJECT_DIR$/skeleton_implementation.rb" />
         <option value="$PROJECT_DIR$/peerSearchInterface.rb" />
+        <option value="$PROJECT_DIR$/peerSearchInterfaceCommented.rb" />
+        <option value="$PROJECT_DIR$/skeleton_implementation.rb" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="1938" />
-    <option name="height" value="1064" />
+    <option name="x" value="960" />
+    <option name="width" value="960" />
+    <option name="height" value="1046" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -110,7 +129,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="appearance" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/peerSearchInterface.rb" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/peerSearchInterfaceCommented.rb" />
     <property name="FullScreen" value="false" />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -303,8 +322,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1064" extended-state="6" />
-    <editor active="false" />
+    <frame x="960" y="0" width="960" height="1046" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -314,7 +333,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5026288" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32912722" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6404372" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.8294314" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -384,15 +403,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="10" />
+      <option name="time" value="11" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/search_result.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="115" selection-start="278" selection-end="278" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/search_result.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="10" selection-start="150" selection-end="150" vertical-scroll-proportion="0.0" />
@@ -465,21 +479,26 @@
     </entry>
     <entry file="file://C:/Ruby193/lib/ruby/1.9.1/tk/clock.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="25" selection-start="1395" selection-end="1395" vertical-scroll-proportion="0.67418265">
-          <folding />
-        </state>
+        <state line="60" column="25" selection-start="1395" selection-end="1395" vertical-scroll-proportion="0.67418265" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/peerSearchInterface.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="696" column="41" selection-start="20958" selection-end="20958" vertical-scroll-proportion="0.7863248">
+        <state line="480" column="97" selection-start="12742" selection-end="12742" vertical-scroll-proportion="-151.11111">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/skeleton_implementation.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="30" selection-start="1671" selection-end="1671" vertical-scroll-proportion="-0.6910299">
+        <state line="103" column="14" selection-start="2831" selection-end="2831" vertical-scroll-proportion="0.5010482">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/peerSearchInterfaceCommented.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="370" column="21" selection-start="15206" selection-end="15206" vertical-scroll-proportion="-4.117249">
           <folding />
         </state>
       </provider>

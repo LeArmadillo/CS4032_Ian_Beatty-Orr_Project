@@ -1,35 +1,20 @@
 require 'json'
 require 'socket'
-#require_relative 'search_result'
-require_relative 'peerSearchInterface'
+#require_relative 'peerSearchInterface'
+require_relative 'peerSearchInterfaceCommented'
 
 ip = "127.0.0.1"
 id = "NILID"
 
+puts "This will take a few minutes to execute if you want to just sit back and watch the messages go by"
+
+puts "Add some nodes"
+
 alpha = PeerSearchInterface.new("ALPHA")
-=begin
-puts alpha.Hash_Func( "Alpha" )
-puts alpha.Hash_Func( "Bravo" )
-puts alpha.Hash_Func( "Charlie" )
-puts alpha.Hash_Func( "Delta" )
-puts alpha.Hash_Func( "Echo" )
-puts alpha.Hash_Func( "Foxtrot" )
-puts alpha.Hash_Func( "Golf" )
-puts alpha.Hash_Func( "Hotel" )
-puts alpha.Hash_Func( "India" )
-puts alpha.Hash_Func( "Juliett" )
-puts alpha.Hash_Func( "Kilo" )
-puts alpha.Hash_Func( "Lime" )
-puts alpha.Hash_Func( "Mike" )
-puts alpha.Hash_Func( "November" )
-puts alpha.Hash_Func( "Oscar" )
-puts alpha.Hash_Func( "Papa" )
-=end
 sA = UDPSocket.new
 sA.bind(ip, 8777)
 alpha.init( sA, InetAddr.new( "127.0.0.1", "8777" ) )
-nid = alpha.joinNetwork( InetAddr.new( nil, nil ), "Alpha", nil )
-#puts "Alpha joining", nid
+anid = alpha.joinNetwork( InetAddr.new( nil, nil ), "Alpha" )
 
 sleep 1
 
@@ -37,24 +22,15 @@ beta = PeerSearchInterface.new("BETA")
 sB = UDPSocket.new
 sB.bind(ip, 8778)
 beta.init( sB, InetAddr.new( "127.0.0.1", "8778" ) )
-nid = beta.joinNetwork( InetAddr.new("127.0.0.1", "8777"), "Beta", "Alpha" )
-#puts "Beta joining", nid
-
+nid = beta.joinNetwork( InetAddr.new("127.0.0.1", "8777"), "Beta" )
 
 sleep 1
-puts "**************************"
-puts "**************************"
-puts "**************************"
-
 
 charlie = PeerSearchInterface.new("CHARLIE")
 sC = UDPSocket.new
 sC.bind(ip, 8779)
 charlie.init( sC, InetAddr.new( "127.0.0.1", "8779" ) )
-nid = charlie.joinNetwork( InetAddr.new( "127.0.0.1", "8778" ), "Charlie", "Alpha" )
-#puts "Charlie joining", nid
-
-
+nid = charlie.joinNetwork( InetAddr.new( "127.0.0.1", "8778" ), "Charlie" )
 
 sleep 1
 
@@ -62,31 +38,91 @@ delta = PeerSearchInterface.new("DELTA")
 sD = UDPSocket.new
 sD.bind(ip, 8780)
 delta.init( sD, InetAddr.new( "127.0.0.1", "8780" ) )
-nid = delta.joinNetwork( InetAddr.new( "127.0.0.1", "8778" ), "Delta", "Charlie" )
-#puts "Charlie joining", nid
+nid = delta.joinNetwork( InetAddr.new( "127.0.0.1", "8778" ), "Delta" )
+
+echo = PeerSearchInterface.new("ECHO")
+sE = UDPSocket.new
+sE.bind(ip, 8781)
+echo.init( sE, InetAddr.new( "127.0.0.1", "8781" ) )
+nid = echo.joinNetwork( InetAddr.new( "127.0.0.1", "8778" ), "Echo" )
 
 sleep 1
 
-#alpha.indexPage( "www.1.url", ["Alpha"] )
-#alpha.indexPage( "www.2.url", ["Beta"] )
+foxtrot = PeerSearchInterface.new("FOXTROT")
+sF = UDPSocket.new
+sF.bind(ip, 8782)
+foxtrot.init( sF, InetAddr.new( "127.0.0.1", "8782" ) )
+nid = foxtrot.joinNetwork( InetAddr.new("127.0.0.1", "8777"), "Foxtrot" )
 
-#sleep 3
-puts "~~~~~~~~~~~~~~~~~"
-puts "~~~~~~~~~~~~~~~~~"
-puts "~~~~~~~~~~~~~~~~~"
-charlie.indexPage( "www.5.url", ["Alpha", "Beta"] )
+sleep 1
 
-sleep 14
-puts "###########################"
-puts "###########################"
-puts "###########################"
-puts "###########################"
-charlie.search( ["Alpha"] )
+golf = PeerSearchInterface.new("GOLF")
+sG = UDPSocket.new
+sG.bind(ip, 8783)
+golf.init( sG, InetAddr.new( "127.0.0.1", "8783" ) )
+nid = golf.joinNetwork( InetAddr.new( "127.0.0.1", "8778" ), "Golf" )
+
+sleep 1
+
+hotel = PeerSearchInterface.new("HOTEL")
+sH = UDPSocket.new
+sH.bind(ip, 8784)
+hotel.init( sH, InetAddr.new( "127.0.0.1", "8784" ) )
+nid = hotel.joinNetwork( InetAddr.new( "127.0.0.1", "8778" ), "Hotel" )
+
+india = PeerSearchInterface.new("INDIA")
+sI = UDPSocket.new
+sI.bind(ip, 8785)
+india.init( sI, InetAddr.new( "127.0.0.1", "8785" ) )
+nid = india.joinNetwork( InetAddr.new("127.0.0.1", "8784"), "India" )
+
+sleep 1
+
+juliett = PeerSearchInterface.new("JULIETT")
+sJ = UDPSocket.new
+sJ.bind(ip, 8786)
+juliett.init( sJ, InetAddr.new( "127.0.0.1", "8786" ) )
+nid = juliett.joinNetwork( InetAddr.new("127.0.0.1", "8777"), "Juliett" )
+
+sleep 1
+
+kilo = PeerSearchInterface.new("KILO")
+sK = UDPSocket.new
+sK.bind(ip, 8787)
+kilo.init( sK, InetAddr.new( "127.0.0.1", "8787" ) )
+nid = kilo.joinNetwork( InetAddr.new( "127.0.0.1", "8778" ), "Kilo" )
+
+sleep 1
+
+lima = PeerSearchInterface.new("LIMA")
+sL = UDPSocket.new
+sL.bind(ip, 8788)
+lima.init( sL, InetAddr.new( "127.0.0.1", "8788" ) )
+nid = lima.joinNetwork( InetAddr.new( "127.0.0.1", "8778" ), "Lima" )
+
+sleep 3
+puts "Index some information"
+
+alpha.indexPage( "www.1.url", ["Alpha"] )
+alpha.indexPage( "www.2.url", ["Beta"] )
+charlie.indexPage( "www.9.url", ["Beta", "Alpha"] )
+delta.indexPage( "www.1.url", ["Beta", "Alpha", "Delta", "Charlie"] )
+
+sleep 20
+puts "Lets Search for some words"
+charlie.search( ["Alpha", "Beta"] )
 
 
+sleep 50
+puts "Lets look at indexing nodes that a) don't exist and b) have left the network"
+alpha.leaveNetwork( anid )
+sleep 1
+charlie.indexPage( "www.5.url", ["Alpha", "Beta", "Zeta"] )
+
+
+sleep 4
 puts 'Type "LEAVE" to leave '
 input = ""
 while input != 'LEAVE'
   input = gets.chomp()
 end
-
