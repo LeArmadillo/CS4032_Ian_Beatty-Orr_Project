@@ -310,6 +310,9 @@ class PeerSearchInterface
         # two given nodes at any time, flag is 0 for available 1 for INDEX in progress and 2 for ACK received
         # Note you can still send INDEX messages to other nodes from this one and even to this node from the other node
         # IF the flag is not available we just wait until it is
+        #
+        # Flag turned off for better performance
+        #
         while @indexAckWait != nil && ( @indexAckWait[ wordHash ] == 1 || @indexAckWait[ wordHash ] == 2 )
         end
         @indexAckWait[ wordHash ] = 1           # Set flag guarding index messages for this node to 1
@@ -324,7 +327,7 @@ class PeerSearchInterface
         end
         @s.send indexMesg, 0, nh.ip, nh.port
         t = Time.now.sec                        # Wait 30 seconds for responce once message is sent
-        t2 = t + 30
+        t2 = t + 90
         while t < t2
           if @indexAckWait[ wordHash ] == 2     # If a flag indicates responce break
             break
@@ -335,7 +338,7 @@ class PeerSearchInterface
           end
         end
         if @indexAckWait[ wordHash ] != 2
-          puts "No acknowledgment from INDEX message checking route"
+          puts @name, "No acknowledgment from INDEX message checking route"
           routeChecker( wordHash )
         else
           puts "Successful Index"
@@ -367,7 +370,7 @@ class PeerSearchInterface
           nh, m, n = nextHop( wordHash[i2] )
           @s.send searchMesg, 0, nh.ip, nh.port
           t = Time.now.sec
-          t2 = t + 30
+          t2 = t + 90
           while t < t2          # Waits 30 seconds before checking route
             if @searchAckWait[ wordHash[i2] ].kind_of?(Array)
               tempResults[ wordHash[i2] ] = @searchAckWait[ wordHash[i2] ]

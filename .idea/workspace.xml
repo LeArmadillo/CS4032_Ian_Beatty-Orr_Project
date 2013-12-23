@@ -5,11 +5,11 @@
     <ignored path="Project.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/search_result.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387623717891" ignored="false" />
-    <file path="/skeleton_implementation.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387812761161" ignored="false" />
+    <file path="/skeleton_implementation.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387813458915" ignored="false" />
     <file path="/Ruby Console" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1386333420562" ignored="false" />
     <file path="/PeerSearchInterface" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387646699792" ignored="false" />
     <file path="/peerSearchInterface.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387801475907" ignored="false" />
-    <file path="/peerSearchInterfaceCommented.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387811964198" ignored="false" />
+    <file path="/peerSearchInterfaceCommented.rb" changelist="a1f63905-b5c5-47d5-b758-54049c35e5b7" time="1387813887977" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,10 +37,10 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="peerSearchInterfaceCommented.rb" pinned="false" current="true" current-in-tab="true">
+            <file leaf-file-name="peerSearchInterfaceCommented.rb" pinned="false" current="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/peerSearchInterfaceCommented.rb">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state line="370" column="21" selection-start="15206" selection-end="15206" vertical-scroll-proportion="-4.117249">
+                  <state line="580" column="35" selection-start="23149" selection-end="23149" vertical-scroll-proportion="0.8726043">
                     <folding />
                   </state>
                 </provider>
@@ -54,10 +54,10 @@
       <content type="file-editors">
         <state>
           <leaf>
-            <file leaf-file-name="skeleton_implementation.rb" pinned="false" current="false" current-in-tab="true">
+            <file leaf-file-name="skeleton_implementation.rb" pinned="false" current="true" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/skeleton_implementation.rb">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state line="103" column="14" selection-start="2831" selection-end="2831" vertical-scroll-proportion="0.5010482">
+                  <state line="114" column="0" selection-start="3134" selection-end="3134" vertical-scroll-proportion="0.6792453">
                     <folding />
                   </state>
                 </provider>
@@ -322,7 +322,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="960" y="0" width="960" height="1046" extended-state="0" />
+    <frame x="960" y="0" width="960" height="1046" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -489,16 +489,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/skeleton_implementation.rb">
+    <entry file="file://$PROJECT_DIR$/peerSearchInterfaceCommented.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="14" selection-start="2831" selection-end="2831" vertical-scroll-proportion="0.5010482">
+        <state line="580" column="35" selection-start="23149" selection-end="23149" vertical-scroll-proportion="0.8726043">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/peerSearchInterfaceCommented.rb">
+    <entry file="file://$PROJECT_DIR$/skeleton_implementation.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="370" column="21" selection-start="15206" selection-end="15206" vertical-scroll-proportion="-4.117249">
+        <state line="114" column="0" selection-start="3134" selection-end="3134" vertical-scroll-proportion="0.6792453">
           <folding />
         </state>
       </provider>

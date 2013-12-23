@@ -112,13 +112,11 @@ sleep 20
 puts "Lets Search for some words"
 charlie.search( ["Alpha", "Beta"] )
 
-
 sleep 50
 puts "Lets look at indexing nodes that a) don't exist and b) have left the network"
 alpha.leaveNetwork( anid )
 sleep 1
 charlie.indexPage( "www.5.url", ["Alpha", "Beta", "Zeta"] )
-
 
 sleep 4
 puts 'Type "LEAVE" to leave '
