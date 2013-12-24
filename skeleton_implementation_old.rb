@@ -6,15 +6,9 @@ require_relative 'peerSearchInterfaceCommented'
 ip = "127.0.0.1"
 id = "NILID"
 
-puts "**********************"
-puts "**********************"
 puts "This will take a few minutes to execute if you want to just sit back and watch the messages go by"
-puts "Type LEAVE once execution is finished to exit"
-puts "**********************"
-puts "**********************"
-puts "Add a lot of nodes"
-puts "**********************"
-puts "**********************"
+
+puts "Add some nodes"
 
 alpha = PeerSearchInterface.new("ALPHA")
 sA = UDPSocket.new
@@ -106,81 +100,29 @@ sL.bind(ip, 8788)
 lima.init( sL, InetAddr.new( "127.0.0.1", "8788" ) )
 nid = lima.joinNetwork( InetAddr.new( "127.0.0.1", "8778" ), "Lima" )
 
-sleep 1
-
-mike = PeerSearchInterface.new("MIKE")
-sM = UDPSocket.new
-sM.bind(ip, 8789)
-mike.init( sM, InetAddr.new( "127.0.0.1", "8789" ) )
-nid = mike.joinNetwork( InetAddr.new("127.0.0.1", "8784"), "Mike" )
-
-sleep 1
-
-november = PeerSearchInterface.new("NOVEMBER")
-sN = UDPSocket.new
-sN.bind(ip, 8790)
-november.init( sN, InetAddr.new( "127.0.0.1", "8790" ) )
-nid = november.joinNetwork( InetAddr.new("127.0.0.1", "8787"), "November" )
-
-sleep 1
-
-oscar = PeerSearchInterface.new("OSCAR")
-sO = UDPSocket.new
-sO.bind(ip, 8791)
-oscar.init( sO, InetAddr.new( "127.0.0.1", "8791" ) )
-nid = oscar.joinNetwork( InetAddr.new( "127.0.0.1", "8788" ), "Oscar" )
-
-sleep 1
-
-papa = PeerSearchInterface.new("PAPA")
-sP = UDPSocket.new
-sP.bind(ip, 8792)
-papa.init( sP, InetAddr.new( "127.0.0.1", "8792" ) )
-nid = papa.joinNetwork( InetAddr.new( "127.0.0.1", "8790" ), "Papa" )
-
 
 sleep 3
-puts "**********************"
-puts "**********************"
 puts "Index some information"
-puts "**********************"
-puts "**********************"
 
 alpha.indexPage( "www.1.url", ["Alpha"] )
 alpha.indexPage( "www.2.url", ["Beta"] )
-alpha.indexPage( "www.3.url", ["Beta"] )
 
 charlie.indexPage( "www.9.url", ["Beta", "Alpha"] )
 
 sleep 10
 delta.indexPage( "www.1.url", ["Beta", "Alpha", "Delta", "Charlie"] )
 
-sleep 50
-oscar.indexPage( "www.8.url", ["Papa", "November", "Juliett", "Foxtrot"] )
-november.indexPage( "www.3.url", ["Alpha"] )
 
-sleep 50
-puts "**********************"
-puts "**********************"
+sleep 30
 puts "Lets Search for some words"
-puts "**********************"
-puts "**********************"
 charlie.search( ["Alpha", "Beta"] )
-sleep 20
-kilo.search( ["Paper", "November", "Foxtrot"] )
-sleep 20
-foxtrot.search( ["Charlie", "Delta"] )
 
 
 sleep 30
-puts "**********************"
-puts "**********************"
 puts "Lets look at indexing nodes that a) don't exist and b) have left the network"
-puts "**********************"
-puts "**********************"
 alpha.leaveNetwork( anid )
 sleep 1
-charlie.indexPage( "www.5.url", ["Alpha", "Beta", "Zeta"] )
+charlie.indexPage( "www.5.url", ["Alpha", "Beta"] )
 
 sleep 4
 puts 'Type "LEAVE" to leave '

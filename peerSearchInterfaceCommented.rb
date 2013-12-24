@@ -274,7 +274,8 @@ class PeerSearchInterface
   # = 1 for check in progress and 2 for ack receaved
   def routeChecker( target_id )
     Thread.new{
-      pingMesg = { :type => "PING", :target_id => target_id, :sender_id => @guid, :ip_address => @localInetAddr.ip }.to_json
+      pingMesg = { :type => "PING", :target_id => target_id, :sender_id => @guid, :ip_address => @localInetAddr.ip, \
+       :port => @localInetAddr.port }.to_json
       nh, m, n = nextCheckHop( target_id )
       if nh.ip != nil
         @s.send pingMesg, 0, nh.ip, nh.port
@@ -313,7 +314,8 @@ class PeerSearchInterface
         #
         # Flag turned off for better performance
         #
-        while @indexAckWait != nil && ( @indexAckWait[ wordHash ] == 1 || @indexAckWait[ wordHash ] == 2 )
+        while @indexAckWait != nil && @indexAckWait[ wordHash ] != nil && \
+         ( @indexAckWait[ wordHash ] == 1 || @indexAckWait[ wordHash ] == 2 )
         end
         @indexAckWait[ wordHash ] = 1           # Set flag guarding index messages for this node to 1
         indexMesg = { :type => "INDEX", :target_id => wordHash, :sender_id => @guid , :keyword => unique_words[i2],
@@ -323,11 +325,12 @@ class PeerSearchInterface
                                                 # just send the message to our own respond without actually sending
           indexMesg = JSON.parse( indexMesg )
           respond( indexMesg )
+          @indexAckWait[ wordHash ] = 0
           return
         end
         @s.send indexMesg, 0, nh.ip, nh.port
         t = Time.now.sec                        # Wait 30 seconds for responce once message is sent
-        t2 = t + 90
+        t2 = t + 250
         while t < t2
           if @indexAckWait[ wordHash ] == 2     # If a flag indicates responce break
             break
@@ -337,11 +340,16 @@ class PeerSearchInterface
             t += 1
           end
         end
+        #puts Time.now, @indexAckWait
         if @indexAckWait[ wordHash ] != 2
-          puts @name, "No acknowledgment from INDEX message checking route"
+          puts " "
+          print @name, "No acknowledgment from INDEX message checking route"
+          puts " "
           routeChecker( wordHash )
         else
-          puts "Successful Index"
+          puts " "
+          print @name, "Successful Index"
+          puts " "
         end
         @indexAckWait[ wordHash ] = 0
       }
@@ -441,13 +449,13 @@ class PeerSearchInterface
         puts " "
         jsonIN = @s.recv(65536)
         puts " "
-        print @name, " has receaved a Message:     ", jsonIN
+        print @name, " ", Time.now, " has receaved a Message:     ", jsonIN
         puts " "
         parsed = JSON.parse(jsonIN)
         if @netWorkMember
           self.respond( parsed )
         else
-          puts "Not a member of a Network"
+          puts "Not a member of a Network hence I will not respond"
         end
       end
     }
@@ -552,7 +560,9 @@ class PeerSearchInterface
         end
         ackIndexMesg = { :type => "ACK_INDEX", :node_id => message["sender_id"], :keyword => message["keyword"] }.to_json
         if message["sender_id"] == @guid
-          puts "OWN INDEXING returning"     # If we are processing our own indexing message no need to send an ACK
+          puts " "
+          print @name, " INDEXING myself"     # If we are processing our own indexing message no need to send an ACK
+          puts " "
           return
         end
         nh, sm, sn = nextHop( message["sender_id"] )
@@ -572,7 +582,7 @@ class PeerSearchInterface
         wordHash = Hash_Func( message["keyword"] )
         @indexAckWait[ wordHash ] = 2
       else
-        nh = nextHop( message["node_id"] )
+        nh, m, n = nextHop( message["node_id"] )
         if nh.ip != nil
           @s.send message.to_json, 0, nh.ip, nh.port
         end
@@ -612,17 +622,18 @@ class PeerSearchInterface
 
     # Upon receaving a PING send onto next hop and generate ACK
     if message["type"] == "PING"
-      if message["node_id"] != @guid
-        nh = nextHop( message["node_id"] )
+      ackMesg = { :type => "ACK", :node_id => @guid, :ip_address => @localInetAddr.ip, \
+       :port => @localInetAddr.port }.to_json
+      @s.send ackMesg, 0, message["ip_address"], message["port"]
+      if message["target_id"] != @guid
+        #puts @name, "PNH", message["target_id"], Time.now
+        nh, m, n = nextHop( message["target_id"] )
         if nh.ip != nil
-          message["ip_address"] = @localInetAddr.port
+          message["ip_address"] = @localInetAddr.ip
+          message["port"] = @localInetAddr.port
           @s.send message.to_json, 0, nh.ip, nh.port
         end
       end
-      ackMesg = { :type => "ACK", :node_id => @guid, :ip_address => @localInetAddr.ip, \
-       :port => @localInetAddr.port }.to_json
-      nh, sm, sn = nextHop( message["sender_id"] )
-      @s.send ackMesg, 0, message["ip_address"], message["port"]
     end
 
     # Upon receiving an ACK message we know this node is still alive
